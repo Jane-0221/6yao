@@ -359,10 +359,12 @@ def coin_toss_to_yao(coin_results):
     """
     将一次抛三枚硬币的结果转换为一爻
     
-    六爻金钱卦正统规则（以阳面/正面数量判定）：
+    六爻金钱卦规则（以少为尊）：
     - 3个阳面（正面）= 老阳（阳爻动）→ 爻值=1（阳），is_moving=True
-    - 2个阳面（正面）= 少阳（阳爻静）→ 爻值=1（阳），is_moving=False
-    - 1个阳面（正面）= 少阴（阴爻静）→ 爻值=2（阴），is_moving=False
+    - 2个阳面（正面）= 少阴（阴爻静）→ 爻值=2（阴），is_moving=False
+      （2正1反，反为少，故阴）
+    - 1个阳面（正面）= 少阳（阳爻静）→ 爻值=1（阳），is_moving=False
+      （1正2反，正为少，故阳）
     - 0个阳面（正面）= 老阴（阴爻动）→ 爻值=2（阴），is_moving=True
     
     Args:
@@ -379,9 +381,9 @@ def coin_toss_to_yao(coin_results):
     if heads_count == 3:
         return (1, True, "老阳")   # 老阳：阳爻动
     elif heads_count == 2:
-        return (1, False, "少阳")  # 少阳：阳爻静
+        return (2, False, "少阴")  # 少阴：阴爻静（以少为尊，2正1反，反为少，故阴）
     elif heads_count == 1:
-        return (2, False, "少阴")  # 少阴：阴爻静
+        return (1, False, "少阳")  # 少阳：阳爻静（以少为尊，1正2反，正为少，故阳）
     else:  # heads_count == 0
         return (2, True, "老阴")   # 老阴：阴爻动
 
