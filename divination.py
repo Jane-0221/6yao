@@ -467,8 +467,9 @@ def coin_divination(coin_results_list):
     
     # 计算卦象 - 需要将yao_list转换为从初爻到上爻的顺序
     yao_list_reversed = list(reversed(yao_list))
-    moving_yao_list_reversed = [7 - y for y in moving_yao_list] if moving_yao_list else None
-    gua_info = calculate_gua(yao_list_reversed, moving_yao_list_reversed)
+    # 动爻位置不需要转换，因为位置定义是固定的（1=初爻，6=上爻）
+    # calculate_gua 内部使用 index = pos - 1 访问数组，所以动爻位置直接传入
+    gua_info = calculate_gua(yao_list_reversed, moving_yao_list)
     
     return {
         'yao_list': yao_list,
