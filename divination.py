@@ -52,6 +52,9 @@ DI_ZHI = {
 # 地支列表（用于计算年支）
 DI_ZHI_LIST = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
 
+# 天干列表（用于计算日天干）
+TIAN_GAN_LIST = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
+
 
 def get_lunar_datetime(solar_date=None):
     """
@@ -86,6 +89,46 @@ def get_year_zhi(lunar_year):
     # 1984年是甲子年，所以用 (year - 4) % 12
     zhi_index = (lunar_year - 4) % 12
     return zhi_index + 1  # 返回1-12
+
+
+def get_day_tiangan(solar_date=None):
+    """
+    获取日天干
+    
+    用于六神排盘，根据日期计算当日的天干。
+    
+    天干计算公式：
+    - 使用公历日期计算日干支
+    - 日天干 = (日数 + 偏移量) % 10
+    
+    Args:
+        solar_date: 阳历日期，默认为当前时间
+    
+    Returns:
+        str: 天干（甲、乙、丙、丁、戊、己、庚、辛、壬、癸）
+    """
+    if solar_date is None:
+        solar_date = datetime.datetime.now()
+    
+    # 使用lunarcalendar库获取农历日期的干支信息
+    solar = Solar(solar_date.year, solar_date.month, solar_date.day)
+    lunar = Converter.Solar2Lunar(solar)
+    
+    # 获取日干支（lunarcalendar库提供的方法）
+    # 日天干计算：基于公历日期
+    # 参考公式：G = 4C + [C/4] + 5y + [y/4] + [3*(M+1)/5] + d - 3
+    # 简化：使用lunarcalendar库的干支计算
+    
+    # 计算日天干索引（0-9对应甲-癸）
+    # 使用基准日期1900年1月1日（甲戌日，天干索引0）
+    base_date = datetime.datetime(1900, 1, 1)
+    delta_days = (solar_date - base_date).days
+    
+    # 1900年1月1日是甲日，天干索引从0开始
+    # 由于1900年1月1日实际是甲戌日，天干为甲（索引0）
+    tiangan_index = delta_days % 10
+    
+    return TIAN_GAN_LIST[tiangan_index]
 
 
 def get_shi_ke(hour=None):
