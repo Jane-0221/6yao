@@ -24,6 +24,7 @@ import random
 import datetime
 from lunarcalendar import Converter, Solar, Lunar
 from stroke_counter import get_text_stroke, get_traditional
+from gua64 import calculate_gua
 
 # 八卦对应表（先天八卦数）
 GUA_NAMES = {
@@ -209,6 +210,9 @@ def time_divination(solar_date=None):
     # 生成六爻列表
     yao_list = gua_to_yao_list(upper_gua, lower_gua)
     
+    # 计算卦象
+    gua_info = calculate_gua(yao_list, moving_yao)
+    
     return {
         'upper_gua': upper_gua,
         'lower_gua': lower_gua,
@@ -222,7 +226,8 @@ def time_divination(solar_date=None):
             'day': lunar_day,
             'shi_ke': shi_ke,
             'shi_ke_name': DI_ZHI_LIST[shi_ke - 1]
-        }
+        },
+        'gua_info': gua_info,
     }
 
 
@@ -296,6 +301,9 @@ def biao_di_wu_divination(name: str, solar_date=None):
     # 生成六爻列表
     yao_list = gua_to_yao_list(upper_gua, lower_gua)
     
+    # 计算卦象
+    gua_info = calculate_gua(yao_list, moving_yao)
+    
     return {
         'name': name,
         'name_traditional': name_traditional,
@@ -312,7 +320,8 @@ def biao_di_wu_divination(name: str, solar_date=None):
             'day': lunar_day,
             'shi_ke': shi_ke,
             'shi_ke_name': DI_ZHI_LIST[shi_ke - 1]
-        }
+        },
+        'gua_info': gua_info,
     }
 
 
@@ -432,10 +441,14 @@ def coin_divination(coin_results_list):
     # 找出所有动爻
     moving_yao_list = [i + 1 for i, detail in enumerate(coin_details) if detail['is_moving']]
     
+    # 计算卦象
+    gua_info = calculate_gua(yao_list, moving_yao_list if moving_yao_list else None)
+    
     return {
         'yao_list': yao_list,
         'moving_yao_list': moving_yao_list,
-        'coin_details': coin_details
+        'coin_details': coin_details,
+        'gua_info': gua_info,
     }
 
 
@@ -494,13 +507,17 @@ def number_divination_v2(upper_num: int, lower_num: int):
     # 生成六爻列表
     yao_list = gua_to_yao_list(upper_gua, lower_gua)
     
+    # 计算卦象
+    gua_info = calculate_gua(yao_list, moving_yao)
+    
     return {
         'upper_num': upper_num,
         'lower_num': lower_num,
         'upper_gua': upper_gua,
         'lower_gua': lower_gua,
         'yao_list': yao_list,
-        'moving_yao': moving_yao
+        'moving_yao': moving_yao,
+        'gua_info': gua_info,
     }
 
 

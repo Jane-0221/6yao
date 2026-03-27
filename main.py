@@ -68,6 +68,18 @@ def biao_di_wu_menu():
         print(f"动爻: 第{result['moving_yao']}爻")
         print(f"六爻: {result['yao_list']}")
         print(f"农历: {result['lunar']['year']}年{result['lunar']['month']}月{result['lunar']['day']}日 时辰{result['lunar']['shi_ke']}")
+        
+        # 显示卦象信息
+        if 'gua_info' in result:
+            gua = result['gua_info']
+            print("-" * 50)
+            print(f"本卦: {gua['ben_gua']['name']}")
+            if gua['bian_gua']:
+                print(f"变卦: {gua['bian_gua']['name']}")
+                print(f"变化: {gua['bian_gua']['change_detail']}")
+            else:
+                print("变卦: 无")
+        
         print("=" * 50)
         
     except Exception as e:
@@ -171,6 +183,17 @@ def display_coin_result(result):
     else:
         print("动爻: 无")
     
+    # 显示卦象信息
+    if 'gua_info' in result:
+        gua = result['gua_info']
+        print("-" * 50)
+        print(f"本卦: {gua['ben_gua']['name']}")
+        if gua['bian_gua']:
+            print(f"变卦: {gua['bian_gua']['name']}")
+            print(f"变化: {gua['bian_gua']['change_detail']}")
+        else:
+            print("变卦: 无")
+    
     print("=" * 50)
 
 
@@ -216,6 +239,17 @@ def number_menu():
                 desc = "老阳（阳爻，动→变阴）"
             marker = " ←动爻" if i + 1 == result['moving_yao'] else ""
             print(f"  {yao_names[i]}: {yao} = {desc}{marker}")
+        
+        # 显示卦象信息
+        if 'gua_info' in result:
+            gua = result['gua_info']
+            print("-" * 50)
+            print(f"本卦: {gua['ben_gua']['name']}")
+            if gua['bian_gua']:
+                print(f"变卦: {gua['bian_gua']['name']}")
+                print(f"变化: {gua['bian_gua']['change_detail']}")
+            else:
+                print("变卦: 无")
         
         print("=" * 50)
         
