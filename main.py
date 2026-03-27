@@ -27,6 +27,7 @@ from divination import (
 from six_gods import (
     calculate_six_gods,
     format_six_gods_result,
+    format_six_gods_simple,
     validate_tiangan,
 )
 
@@ -55,7 +56,6 @@ def print_menu():
     print("1. 标的物起卦（笔画+日时）")
     print("2. 硬币起卦")
     print("3. 数字起卦（上下卦分开输入）")
-    print("4. 六神排盘（根据日天干）")
     print("0. 退出")
     print("=" * 50)
 
@@ -112,6 +112,11 @@ def biao_di_wu_menu():
             gong = get_gong_name(gua_name)
             liu_qin_result = get_six_yao_liu_qin(gong, di_zhi_result["di_zhi"])
             print(format_liu_qin_simple(liu_qin_result))
+            
+            # 显示六神信息
+            day_tiangan = get_day_tiangan()
+            six_gods_result = calculate_six_gods(day_tiangan, yao_list=result['yao_list'])
+            print(format_six_gods_simple(six_gods_result))
         
         print("=" * 50)
         
@@ -243,6 +248,11 @@ def display_coin_result(result):
         gong = get_gong_name(gua_name)
         liu_qin_result = get_six_yao_liu_qin(gong, di_zhi_result["di_zhi"])
         print(format_liu_qin_simple(liu_qin_result))
+        
+        # 显示六神信息
+        day_tiangan = get_day_tiangan()
+        six_gods_result = calculate_six_gods(day_tiangan, yao_list=result['yao_list'])
+        print(format_six_gods_simple(six_gods_result))
     
     print("=" * 50)
 
@@ -317,6 +327,11 @@ def number_menu():
             gong = get_gong_name(gua_name)
             liu_qin_result = get_six_yao_liu_qin(gong, di_zhi_result["di_zhi"])
             print(format_liu_qin_simple(liu_qin_result))
+            
+            # 显示六神信息
+            day_tiangan = get_day_tiangan()
+            six_gods_result = calculate_six_gods(day_tiangan, yao_list=result['yao_list'])
+            print(format_six_gods_simple(six_gods_result))
         
         print("=" * 50)
         
@@ -326,91 +341,11 @@ def number_menu():
         print(f"起卦出错: {e}")
 
 
-def six_gods_menu():
-    """六神排盘菜单"""
-    print("\n--- 六神排盘 ---")
-    print("根据《卜筮正宗》六爻六神排盘的正统规则")
-    print("六神顺序：青龙、朱雀、勾陈、螣蛇、白虎、玄武")
-    print()
-    print("1. 使用当前日期的天干")
-    print("2. 手动输入天干")
-    
-    choice = input("请选择 (1-2): ").strip()
-    
-    if choice == "1":
-        auto_six_gods_menu()
-    elif choice == "2":
-        manual_six_gods_menu()
-    else:
-        print("无效选择！")
-
-
-def auto_six_gods_menu():
-    """使用当前日期的天干进行六神排盘"""
-    print("\n--- 使用当前日期的天干 ---")
-    
-    try:
-        # 获取当前日期的天干
-        day_tiangan = get_day_tiangan()
-        today = datetime.datetime.now()
-        
-        print(f"当前日期: {today.strftime('%Y-%m-%d')}")
-        print(f"日天干: {day_tiangan}")
-        print()
-        
-        # 计算六神排盘
-        result = calculate_six_gods(day_tiangan)
-        
-        # 显示结果
-        print("=" * 50)
-        print("六神排盘结果")
-        print("=" * 50)
-        print(format_six_gods_result(result))
-        print("=" * 50)
-        
-    except Exception as e:
-        print(f"排盘出错: {e}")
-
-
-def manual_six_gods_menu():
-    """手动输入天干进行六神排盘"""
-    print("\n--- 手动输入天干 ---")
-    print("请输入十天干之一：甲、乙、丙、丁、戊、己、庚、辛、壬、癸")
-    
-    tiangan = input("日天干: ").strip()
-    
-    if not tiangan:
-        print("错误：天干不能为空！")
-        return
-    
-    # 验证天干
-    if not validate_tiangan(tiangan):
-        print(f"错误：无效的天干'{tiangan}'")
-        print("请输入十天干之一：甲、乙、丙、丁、戊、己、庚、辛、壬、癸")
-        return
-    
-    try:
-        # 计算六神排盘
-        result = calculate_six_gods(tiangan)
-        
-        # 显示结果
-        print("\n" + "=" * 50)
-        print("六神排盘结果")
-        print("=" * 50)
-        print(format_six_gods_result(result))
-        print("=" * 50)
-        
-    except ValueError as e:
-        print(f"错误: {e}")
-    except Exception as e:
-        print(f"排盘出错: {e}")
-
-
 def main():
     """主函数"""
     while True:
         print_menu()
-        choice = input("请选择 (0-4): ").strip()
+        choice = input("请选择 (0-3): ").strip()
         
         if choice == "1":
             biao_di_wu_menu()
@@ -418,8 +353,6 @@ def main():
             coin_menu()
         elif choice == "3":
             number_menu()
-        elif choice == "4":
-            six_gods_menu()
         elif choice == "0":
             print("\n感谢使用，再见！")
             break

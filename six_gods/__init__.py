@@ -33,6 +33,7 @@ from .utils import (
     format_six_gods_result,
     print_six_gods_result,
     format_six_gods_table,
+    format_six_gods_simple,
     get_six_god_for_yao,
     validate_tiangan,
 )
@@ -51,6 +52,7 @@ __all__ = [
     'format_six_gods_result',
     'print_six_gods_result',
     'format_six_gods_table',
+    'format_six_gods_simple',
     'get_six_god_for_yao',
     'validate_tiangan',
 ]

@@ -100,6 +100,24 @@ def format_six_gods_table(result: dict) -> str:
     return "\n".join(lines)
 
 
+def format_six_gods_simple(result: dict) -> str:
+    """
+    简洁格式输出六神（与六亲显示风格一致）
+    
+    Args:
+        result: calculate_six_gods() 返回的结果字典
+    
+    Returns:
+        str: 简洁格式的字符串
+    
+    Examples:
+        >>> result = calculate_six_gods("甲")
+        >>> print(format_six_gods_simple(result))
+        六神: 青龙 朱雀 勾陈 螣蛇 白虎 玄武
+    """
+    return f"六神: {' '.join(result['six_gods_list'])}"
+
+
 def get_six_god_for_yao(day_tiangan: str, yao_position: int) -> str:
     """
     获取指定爻位的六神
