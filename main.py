@@ -205,14 +205,14 @@ def display_coin_result(result):
     print("起卦结果")
     print("=" * 50)
     
-    # 显示每次抛硬币的详情
+    # 显示每次抛硬币的详情（已经是从上爻到初爻的顺序）
     print("\n硬币详情：")
     for detail in result['coin_details']:
         coin_str = " ".join(["正" if c else "反" for c in detail['coin_results']])
         moving_marker = " ←动爻" if detail['is_moving'] else ""
         print(f"  {detail['yao_name']}: {coin_str} ({detail['heads_count']}正{detail['tails_count']}反) -> {detail['yao_desc']}{moving_marker}")
     
-    # 显示六爻列表
+    # 显示六爻列表（从上爻到初爻）
     print(f"\n六爻: {result['yao_list']}")
     
     # 显示动爻
@@ -249,9 +249,10 @@ def display_coin_result(result):
         liu_qin_result = get_six_yao_liu_qin(gong, di_zhi_result["di_zhi"])
         print(format_liu_qin_simple(liu_qin_result))
         
-        # 显示六神信息
+        # 显示六神信息 - 需要使用从初爻到上爻的顺序
         day_tiangan = get_day_tiangan()
-        six_gods_result = calculate_six_gods(day_tiangan, yao_list=result['yao_list'])
+        yao_list_for_six_gods = list(reversed(result['yao_list']))  # 转换为从初爻到上爻
+        six_gods_result = calculate_six_gods(day_tiangan, yao_list=yao_list_for_six_gods)
         print(format_six_gods_simple(six_gods_result))
     
     print("=" * 50)

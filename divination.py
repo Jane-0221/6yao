@@ -396,11 +396,11 @@ def coin_divination(coin_results_list):
         coin_results_list: list[list[bool]] - 6次抛硬币结果，每次3个布尔值
             例如: [[True, True, False], [True, False, False], ...]
             True=正面，False=反面
-            顺序：第1个列表=初爻，第6个列表=上爻
+            顺序：第1个列表=上爻，第6个列表=初爻（从上到下）
     
     Returns:
         dict: {
-            'yao_list': 六爻列表 [初爻, 二爻, 三爻, 四爻, 五爻, 上爻],
+            'yao_list': 六爻列表 [上爻, 五爻, 四爻, 三爻, 二爻, 初爻],
             'moving_yao_list': 动爻位置列表,
             'coin_details': 每次抛硬币的详细信息
         }
@@ -408,7 +408,8 @@ def coin_divination(coin_results_list):
     yao_list = []
     coin_details = []
     
-    yao_names = ["初爻", "二爻", "三爻", "四爻", "五爻", "上爻"]
+    # 硬币起卦的爻名顺序：从上爻到初爻
+    yao_names = ["上爻", "五爻", "四爻", "三爻", "二爻", "初爻"]
     
     for i, coin_results in enumerate(coin_results_list):
         yao_value, is_moving, yao_type = coin_toss_to_yao(coin_results)
@@ -428,9 +429,12 @@ def coin_divination(coin_results_list):
         else:  # 老阴
             yao_desc = "老阴（阴爻，动→变阳）"
         
+        # 爻位置：上爻=6, 五爻=5, 四爻=4, 三爻=3, 二爻=2, 初爻=1
+        yao_position = 6 - i
+        
         coin_details.append({
             'yao_name': yao_names[i],
-            'yao_index': i + 1,
+            'yao_index': yao_position,
             'coin_results': coin_results,
             'heads_count': heads_count,
             'tails_count': tails_count,
@@ -440,11 +444,13 @@ def coin_divination(coin_results_list):
             'is_moving': is_moving
         })
     
-    # 找出所有动爻
-    moving_yao_list = [i + 1 for i, detail in enumerate(coin_details) if detail['is_moving']]
+    # 找出所有动爻（返回爻位置，如6=上爻, 1=初爻）
+    moving_yao_list = [detail['yao_index'] for detail in coin_details if detail['is_moving']]
     
-    # 计算卦象
-    gua_info = calculate_gua(yao_list, moving_yao_list if moving_yao_list else None)
+    # 计算卦象 - 需要将yao_list转换为从初爻到上爻的顺序
+    yao_list_reversed = list(reversed(yao_list))
+    moving_yao_list_reversed = [7 - y for y in moving_yao_list] if moving_yao_list else None
+    gua_info = calculate_gua(yao_list_reversed, moving_yao_list_reversed)
     
     return {
         'yao_list': yao_list,

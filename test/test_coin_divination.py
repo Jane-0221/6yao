@@ -2,6 +2,7 @@
 """
 硬币起卦功能测试
 测试"以少为尊"规则
+测试六爻对应关系：索引0=上爻，索引5=初爻
 """
 
 import sys
@@ -56,38 +57,40 @@ def test_coin_toss_to_yao():
 
 
 def test_coin_divination():
-    """测试完整的硬币起卦功能"""
+    """测试完整的硬币起卦功能（六爻顺序：索引0=上爻，索引5=初爻）"""
     print("=" * 60)
     print("测试 coin_divination 函数")
+    print("六爻顺序：索引0=上爻，索引5=初爻")
     print("=" * 60)
     
     # 模拟6次抛硬币结果
-    # 测试用例：包含各种情况
+    # 输入顺序：第1个=上爻，第6个=初爻
     coin_results_list = [
-        [True, True, True],    # 老阳
-        [True, True, False],   # 少阴（以少为尊）
-        [True, False, False],  # 少阳（以少为尊）
-        [False, False, False], # 老阴
-        [True, False, True],   # 少阴（以少为尊）
-        [False, True, False],  # 少阳（以少为尊）
+        [True, True, True],    # 上爻: 老阳
+        [True, True, False],   # 五爻: 少阴（以少为尊）
+        [True, False, False],  # 四爻: 少阳（以少为尊）
+        [False, False, False], # 三爻: 老阴
+        [True, False, True],   # 二爻: 少阴（以少为尊）
+        [False, True, False],  # 初爻: 少阳（以少为尊）
     ]
     
     result = coin_divination(coin_results_list)
     
     print(f"六爻列表: {result['yao_list']}")
+    print(f"  索引0=上爻, 索引1=五爻, 索引2=四爻, 索引3=三爻, 索引4=二爻, 索引5=初爻")
     print(f"动爻列表: {result['moving_yao_list']}")
     print()
     
-    # 验证六爻列表
-    expected_yao_list = [1, 2, 1, 2, 2, 1]  # 老阳, 少阴, 少阳, 老阴, 少阴, 少阳
+    # 验证六爻列表（从上爻到初爻）
+    expected_yao_list = [1, 2, 1, 2, 2, 1]  # 上爻=老阳, 五爻=少阴, 四爻=少阳, 三爻=老阴, 二爻=少阴, 初爻=少阳
     if result['yao_list'] == expected_yao_list:
         print("✓ 六爻列表正确")
     else:
         print(f"✗ 六爻列表错误: 期望 {expected_yao_list}, 实际 {result['yao_list']}")
     
-    # 验证动爻列表（老阳和老阴为动爻）
-    expected_moving = [1, 4]  # 第1爻(老阳)和第4爻(老阴)
-    if result['moving_yao_list'] == expected_moving:
+    # 验证动爻列表（老阳和老阴为动爻，返回爻位置：上爻=6, 三爻=3）
+    expected_moving = [6, 3]  # 上爻(6)和三爻(3)为动爻
+    if sorted(result['moving_yao_list']) == sorted(expected_moving):
         print("✓ 动爻列表正确")
     else:
         print(f"✗ 动爻列表错误: 期望 {expected_moving}, 实际 {result['moving_yao_list']}")
@@ -95,7 +98,7 @@ def test_coin_divination():
     print()
     
     # 显示详细信息
-    print("详细信息:")
+    print("详细信息（从上爻到初爻）:")
     for detail in result['coin_details']:
         coin_str = " ".join(["正" if c else "反" for c in detail['coin_results']])
         moving_marker = " ←动爻" if detail['is_moving'] else ""
@@ -111,7 +114,7 @@ def test_coin_divination():
             print(f"变卦: {gua['bian_gua']['name']}")
             print(f"变化: {gua['bian_gua']['change_detail']}")
     
-    return result['yao_list'] == expected_yao_list and result['moving_yao_list'] == expected_moving
+    return result['yao_list'] == expected_yao_list and sorted(result['moving_yao_list']) == sorted(expected_moving)
 
 
 def test_auto_coin_divination():
@@ -123,6 +126,7 @@ def test_auto_coin_divination():
     result = auto_coin_divination()
     
     print(f"六爻列表: {result['yao_list']}")
+    print(f"  索引0=上爻, 索引1=五爻, 索引2=四爻, 索引3=三爻, 索引4=二爻, 索引5=初爻")
     print(f"动爻列表: {result['moving_yao_list']}")
     
     # 验证六爻列表长度
@@ -138,7 +142,7 @@ def test_auto_coin_divination():
         print("✗ 存在无效的爻值")
     
     print()
-    print("详细信息:")
+    print("详细信息（从上爻到初爻）:")
     for detail in result['coin_details']:
         coin_str = " ".join(["正" if c else "反" for c in detail['coin_results']])
         moving_marker = " ←动爻" if detail['is_moving'] else ""
@@ -150,7 +154,9 @@ def test_auto_coin_divination():
 def main():
     """运行所有测试"""
     print("\n" + "=" * 60)
-    print("硬币起卦功能测试（以少为尊规则）")
+    print("硬币起卦功能测试")
+    print("规则：以少为尊")
+    print("六爻顺序：索引0=上爻，索引5=初爻")
     print("=" * 60 + "\n")
     
     # 测试1: 单次抛硬币转爻
