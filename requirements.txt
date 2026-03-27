@@ -1,0 +1,4 @@
+# 六爻起卦系统依赖包
+LunarCalendar>=0.0.9
+unihan-etl>=0.41.0
+opencc-python-reimplemented>=0.1.7
