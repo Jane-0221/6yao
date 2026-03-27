@@ -30,6 +30,11 @@ from six_gods import (
     validate_tiangan,
 )
 
+from shi_ying import (
+    get_shi_ying,
+    get_yao_name,
+)
+
 
 def print_menu():
     """打印菜单"""
@@ -79,6 +84,12 @@ def biao_di_wu_menu():
                 print(f"变化: {gua['bian_gua']['change_detail']}")
             else:
                 print("变卦: 无")
+            
+            # 显示世应信息
+            gua_name = gua['ben_gua']['gua64_name']
+            shi_ying = get_shi_ying(gua_name)
+            print(f"世爻: {get_yao_name(shi_ying['shi'])}（第{shi_ying['shi']}爻）")
+            print(f"应爻: {get_yao_name(shi_ying['ying'])}（第{shi_ying['ying']}爻）")
         
         print("=" * 50)
         
@@ -193,6 +204,12 @@ def display_coin_result(result):
             print(f"变化: {gua['bian_gua']['change_detail']}")
         else:
             print("变卦: 无")
+        
+        # 显示世应信息
+        gua_name = gua['ben_gua']['gua64_name']
+        shi_ying = get_shi_ying(gua_name)
+        print(f"世爻: {get_yao_name(shi_ying['shi'])}（第{shi_ying['shi']}爻）")
+        print(f"应爻: {get_yao_name(shi_ying['ying'])}（第{shi_ying['ying']}爻）")
     
     print("=" * 50)
 
@@ -250,6 +267,12 @@ def number_menu():
                 print(f"变化: {gua['bian_gua']['change_detail']}")
             else:
                 print("变卦: 无")
+            
+            # 显示世应信息
+            gua_name = gua['ben_gua']['gua64_name']
+            shi_ying = get_shi_ying(gua_name)
+            print(f"世爻: {get_yao_name(shi_ying['shi'])}（第{shi_ying['shi']}爻）")
+            print(f"应爻: {get_yao_name(shi_ying['ying'])}（第{shi_ying['ying']}爻）")
         
         print("=" * 50)
         
