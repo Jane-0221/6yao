@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 六爻起卦系统 - 交互式主程序
-四种起卦方式：
-1. 时间起卦（梅花易数）
-2. 标的物起卦（笔画+日时）
-3. 随机起卦
-4. 数字起卦（上下卦分开输入）
+三种起卦方式：
+1. 标的物起卦（笔画+日时）
+2. 随机起卦
+3. 数字起卦（上下卦分开输入）
 """
 
 import sys
 from divination import (
-    time_divination,
     biao_di_wu_divination,
     random_divination,
     number_divination_v2,
@@ -23,34 +21,11 @@ def print_menu():
     print("\n" + "=" * 50)
     print("       六爻起卦系统")
     print("=" * 50)
-    print("1. 时间起卦（梅花易数）")
-    print("2. 标的物起卦（笔画+日时）")
-    print("3. 随机起卦")
-    print("4. 数字起卦（上下卦分开输入）")
+    print("1. 标的物起卦（笔画+日时）")
+    print("2. 随机起卦")
+    print("3. 数字起卦（上下卦分开输入）")
     print("0. 退出")
     print("=" * 50)
-
-
-def time_menu():
-    """时间起卦菜单"""
-    print("\n--- 时间起卦（梅花易数）---")
-    print("算法：上卦=(年+月+日)%8，下卦=(年+月+日+时)%8，动爻=(年+月+日+时)%6")
-    
-    try:
-        result = time_divination()
-        
-        print("\n" + "=" * 50)
-        print("起卦结果")
-        print("=" * 50)
-        print(f"上卦: {result['upper_gua']} - {GUA_NAMES[result['upper_gua']]}")
-        print(f"下卦: {result['lower_gua']} - {GUA_NAMES[result['lower_gua']]}")
-        print(f"动爻: 第{result['moving_yao']}爻")
-        print(f"六爻: {result['yao_list']}")
-        print(f"农历: {result['lunar']['year']}年{result['lunar']['month']}月{result['lunar']['day']}日 时辰{result['lunar']['shi_ke']}")
-        print("=" * 50)
-        
-    except Exception as e:
-        print(f"起卦出错: {e}")
 
 
 def biao_di_wu_menu():
@@ -173,15 +148,13 @@ def main():
     """主函数"""
     while True:
         print_menu()
-        choice = input("请选择 (0-4): ").strip()
+        choice = input("请选择 (0-3): ").strip()
         
         if choice == "1":
-            time_menu()
-        elif choice == "2":
             biao_di_wu_menu()
-        elif choice == "3":
+        elif choice == "2":
             random_menu()
-        elif choice == "4":
+        elif choice == "3":
             number_menu()
         elif choice == "0":
             print("\n感谢使用，再见！")
