@@ -1,0 +1,218 @@
+{
+  "main_gua": {
+    "name": "艮为山",
+    "palace": "艮宫",
+    "element": "土",
+    "shi_pos": 5
+  },
+  "shi_ying": {
+    "shi": 6,
+    "ying": 3
+  },
+  "main_yao_detail": [
+    {
+      "yao_pos": 1,
+      "tian_gan": "丙",
+      "di_zhi": "辰",
+      "element": "土",
+      "yin_yang": 1,
+      "dong_bian": 1,
+      "is_shi": false,
+      "is_ying": false,
+      "liu_qin": "兄弟",
+      "liu_shen": "青龙",
+      "wang_shuai": {
+        "final": "休囚",
+        "base": "死",
+        "score": 1
+      },
+      "relations": {
+        "合": [],
+        "冲": [
+          "戌"
+        ],
+        "刑": [],
+        "害": [],
+        "破": []
+      },
+      "shen_sha": []
+    },
+    {
+      "yao_pos": 2,
+      "tian_gan": "丙",
+      "di_zhi": "午",
+      "element": "火",
+      "yin_yang": 0,
+      "dong_bian": 2,
+      "is_shi": false,
+      "is_ying": false,
+      "liu_qin": "父母",
+      "liu_shen": "朱雀",
+      "wang_shuai": {
+        "final": "休囚",
+        "base": "相（日克）（日冲）",
+        "score": 1
+      },
+      "relations": {
+        "合": [],
+        "冲": [
+          "子",
+          "子"
+        ],
+        "刑": [],
+        "害": [],
+        "破": []
+      },
+      "shen_sha": []
+    },
+    {
+      "yao_pos": 3,
+      "tian_gan": "丙",
+      "di_zhi": "申",
+      "element": "金",
+      "yin_yang": 0,
+      "dong_bian": 2,
+      "is_shi": false,
+      "is_ying": true,
+      "liu_qin": "子孙",
+      "liu_shen": "勾陈",
+      "wang_shuai": {
+        "final": "休囚",
+        "base": "囚",
+        "score": 2
+      },
+      "relations": {
+        "合": [],
+        "冲": [
+          "寅",
+          "寅"
+        ],
+        "刑": [],
+        "害": [],
+        "破": []
+      },
+      "shen_sha": []
+    },
+    {
+      "yao_pos": 4,
+      "tian_gan": "丙",
+      "di_zhi": "戌",
+      "element": "土",
+      "yin_yang": 1,
+      "dong_bian": 1,
+      "is_shi": false,
+      "is_ying": false,
+      "liu_qin": "兄弟",
+      "liu_shen": "螣蛇",
+      "wang_shuai": {
+        "final": "休囚",
+        "base": "死",
+        "score": 1
+      },
+      "relations": {
+        "合": [],
+        "冲": [
+          "辰"
+        ],
+        "刑": [],
+        "害": [],
+        "破": []
+      },
+      "shen_sha": []
+    },
+    {
+      "yao_pos": 5,
+      "tian_gan": "丙",
+      "di_zhi": "子",
+      "element": "水",
+      "yin_yang": 0,
+      "dong_bian": 2,
+      "is_shi": false,
+      "is_ying": false,
+      "liu_qin": "妻财",
+      "liu_shen": "白虎",
+      "wang_shuai": {
+        "final": "有气",
+        "base": "休（日比）",
+        "score": 4
+      },
+      "relations": {
+        "合": [],
+        "冲": [
+          "午"
+        ],
+        "刑": [],
+        "害": [],
+        "破": []
+      },
+      "shen_sha": []
+    },
+    {
+      "yao_pos": 6,
+      "tian_gan": "丙",
+      "di_zhi": "寅",
+      "element": "木",
+      "yin_yang": 0,
+      "dong_bian": 2,
+      "is_shi": true,
+      "is_ying": false,
+      "liu_qin": "官鬼",
+      "liu_shen": "玄武",
+      "wang_shuai": {
+        "final": "旺相有力",
+        "base": "旺（日生）",
+        "score": 7
+      },
+      "relations": {
+        "合": [],
+        "冲": [
+          "申"
+        ],
+        "刑": [],
+        "害": [],
+        "破": []
+      },
+      "shen_sha": [
+        "驿马"
+      ]
+    }
+  ],
+  "has_bian_gua": true,
+  "bian_gua": {
+    "name": "乾为天",
+    "palace": "乾宫",
+    "element": "金",
+    "shi_pos": 5
+  },
+  "bian_yao_detail": null,
+  "xun_kong": {
+    "xun_shou": "甲子",
+    "di_zhi": [
+      "戌",
+      "亥"
+    ]
+  },
+  "fei_fu_shen": [],
+  "shen_sha_all": {
+    "天乙贵人": [
+      "丑",
+      "未"
+    ],
+    "驿马": [
+      "寅"
+    ]
+  },
+  "divination_time": "2026-03-27 06:58:09",
+  "divination_method": "时间起卦",
+  "yao_list": [
+    1,
+    2,
+    2,
+    1,
+    2,
+    2
+  ],
+  "ri_gan": "甲",
+  "ri_zhi": "子",
+  "yue_jian": "寅"
+}
