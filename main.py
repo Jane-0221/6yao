@@ -33,11 +33,17 @@ from six_gods import (
 from shi_ying import (
     get_shi_ying,
     get_yao_name,
+    get_gong_name,
 )
 
 from di_zhi import (
     get_six_yao_di_zhi,
     format_di_zhi_simple,
+)
+
+from liu_qin import (
+    get_six_yao_liu_qin,
+    format_liu_qin_simple,
 )
 
 
@@ -101,6 +107,11 @@ def biao_di_wu_menu():
             lower_gua = gua['ben_gua']['lower_gua']
             di_zhi_result = get_six_yao_di_zhi(upper_gua, lower_gua)
             print(format_di_zhi_simple(di_zhi_result))
+            
+            # 显示六亲信息
+            gong = get_gong_name(gua_name)
+            liu_qin_result = get_six_yao_liu_qin(gong, di_zhi_result["di_zhi"])
+            print(format_liu_qin_simple(liu_qin_result))
         
         print("=" * 50)
         
@@ -227,6 +238,11 @@ def display_coin_result(result):
         lower_gua = gua['ben_gua']['lower_gua']
         di_zhi_result = get_six_yao_di_zhi(upper_gua, lower_gua)
         print(format_di_zhi_simple(di_zhi_result))
+        
+        # 显示六亲信息
+        gong = get_gong_name(gua_name)
+        liu_qin_result = get_six_yao_liu_qin(gong, di_zhi_result["di_zhi"])
+        print(format_liu_qin_simple(liu_qin_result))
     
     print("=" * 50)
 
@@ -296,6 +312,11 @@ def number_menu():
             lower_gua = gua['ben_gua']['lower_gua']
             di_zhi_result = get_six_yao_di_zhi(upper_gua, lower_gua)
             print(format_di_zhi_simple(di_zhi_result))
+            
+            # 显示六亲信息
+            gong = get_gong_name(gua_name)
+            liu_qin_result = get_six_yao_liu_qin(gong, di_zhi_result["di_zhi"])
+            print(format_liu_qin_simple(liu_qin_result))
         
         print("=" * 50)
         
