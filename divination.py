@@ -2,7 +2,7 @@
 """
 六爻起卦模块
 三种起卦方式：
-1. 标的物起卦（笔画+日时）
+1. 时间起卦（梅花易数）
 2. 随机起卦
 3. 数字起卦（上下卦分开输入）
 """
@@ -50,14 +50,98 @@ def get_lunar_datetime(solar_date=None):
     return lunar
 
 
+def get_shi_ke(hour=None):
+    """
+    获取时辰数（1-12）
+    
+    Args:
+        hour: 小时数，默认为当前小时
+    
+    Returns:
+        时辰数（1-12），子时=1, 丑时=2, ..., 亥时=12
+    """
+    if hour is None:
+        hour = datetime.datetime.now().hour
+    
+    # 将小时转换为时辰数（23-1点为子时=1，1-3点为丑时=2，以此类推）
+    if hour == 23 or hour == 0:
+        return 1  # 子时
+    else:
+        return (hour + 1) // 2 + 1 if hour % 2 == 1 else (hour + 1) // 2
+
+
+def time_divination(solar_date=None):
+    """
+    时间起卦（梅花易数）
+    
+    算法：
+    - 上卦 = (年+月+日) % 8，余数0取8
+    - 下卦 = (年+月+日+时) % 8，余数0取8
+    - 动爻 = (年+月+日+时) % 6，余数0取6
+    
+    Args:
+        solar_date: 阳历日期，默认为当前时间
+    
+    Returns:
+        dict: {
+            'upper_gua': 上卦(1-8),
+            'lower_gua': 下卦(1-8),
+            'moving_yao': 动爻位置(1-6),
+            'yao_list': 六爻列表,
+            'lunar': 农历日期信息
+        }
+    """
+    # 获取农历日期
+    lunar = get_lunar_datetime(solar_date)
+    
+    # 获取农历时间
+    lunar_year = lunar.year
+    lunar_month = lunar.month
+    lunar_day = lunar.day
+    
+    # 获取时辰
+    hour = datetime.datetime.now().hour if solar_date is None else solar_date.hour
+    shi_ke = get_shi_ke(hour)
+    
+    # 计算上卦：(年 + 月 + 日) % 8
+    upper_num = (lunar_year + lunar_month + lunar_day) % 8
+    upper_gua = upper_num if upper_num != 0 else 8
+    
+    # 计算下卦：(年 + 月 + 日 + 时) % 8
+    lower_num = (lunar_year + lunar_month + lunar_day + shi_ke) % 8
+    lower_gua = lower_num if lower_num != 0 else 8
+    
+    # 计算动爻：(年 + 月 + 日 + 时) % 6
+    moving_num = (lunar_year + lunar_month + lunar_day + shi_ke) % 6
+    moving_yao = moving_num if moving_num != 0 else 6
+    
+    # 生成六爻列表
+    yao_list = gua_to_yao_list(upper_gua, lower_gua)
+    
+    return {
+        'upper_gua': upper_gua,
+        'lower_gua': lower_gua,
+        'moving_yao': moving_yao,
+        'yao_list': yao_list,
+        'lunar': {
+            'year': lunar_year,
+            'month': lunar_month,
+            'day': lunar_day,
+            'shi_ke': shi_ke
+        }
+    }
+
+
 def biao_di_wu_divination(name: str, solar_date=None):
     """
     标的物起卦（笔画+日时）
     
+    使用梅花易数算法，笔画数作为额外参数加入计算
+    
     算法：
-    - 上卦 = (笔画数 + 农历年 + 农历月 + 农历日) % 8，余数0取8
-    - 下卦 = (笔画数 + 农历时) % 8，余数0取8
-    - 动爻 = (笔画数 + 农历年 + 农历月 + 农历日 + 农历时) % 6，余数0取6
+    - 上卦 = (笔画数 + 年 + 月 + 日) % 8，余数0取8
+    - 下卦 = (笔画数 + 年 + 月 + 日 + 时) % 8，余数0取8
+    - 动爻 = (笔画数 + 年 + 月 + 日 + 时) % 6，余数0取6
     
     Args:
         name: 标的物名称（简体）
@@ -89,21 +173,19 @@ def biao_di_wu_divination(name: str, solar_date=None):
     lunar_month = lunar.month
     lunar_day = lunar.day
     
-    # 获取当前时辰（简化：使用小时）
-    hour = datetime.datetime.now().hour
-    # 将小时转换为时辰（23-1点为子时，1-3点为丑时，以此类推）
-    shi_ke = (hour + 1) // 2 % 12  # 0-11对应子-亥
+    # 获取时辰
+    hour = datetime.datetime.now().hour if solar_date is None else solar_date.hour
+    shi_ke = get_shi_ke(hour)
     
-    # 计算上下卦和动爻
-    # 上卦：(笔画 + 年 + 月 + 日) % 8
+    # 计算上卦：(笔画 + 年 + 月 + 日) % 8
     upper_num = (stroke + lunar_year + lunar_month + lunar_day) % 8
     upper_gua = upper_num if upper_num != 0 else 8
     
-    # 下卦：(笔画 + 时辰) % 8
-    lower_num = (stroke + shi_ke) % 8
+    # 计算下卦：(笔画 + 年 + 月 + 日 + 时) % 8
+    lower_num = (stroke + lunar_year + lunar_month + lunar_day + shi_ke) % 8
     lower_gua = lower_num if lower_num != 0 else 8
     
-    # 动爻：(笔画 + 年 + 月 + 日 + 时辰) % 6
+    # 计算动爻：(笔画 + 年 + 月 + 日 + 时) % 6
     moving_num = (stroke + lunar_year + lunar_month + lunar_day + shi_ke) % 6
     moving_yao = moving_num if moving_num != 0 else 6
     
@@ -221,10 +303,6 @@ def gua_to_yao_list(upper_gua: int, lower_gua: int):
     lower_bin = GUA_BINARIES.get(lower_gua, "000")
     
     # 组合成六爻（从下到上：下卦三位 + 上卦三位）
-    # lower_bin是下卦，从下往上是 low->mid->high
-    # upper_bin是上卦，从下往上是 low->mid->high
-    # 六爻顺序：初爻(二爻) -> 二爻 -> 三爻 -> 四爻 -> 五爻 -> 上爻(六爻)
-    
     yao_list = []
     
     # 下卦三位（初爻、二爻、三爻）
@@ -271,6 +349,17 @@ def get_yao_description(yao_list):
 def test_divination():
     """测试所有起卦方式"""
     print("=" * 60)
+    print("时间起卦测试（梅花易数）")
+    print("=" * 60)
+    
+    result = time_divination()
+    print(f"上卦: {result['upper_gua']} ({GUA_NAMES[result['upper_gua']]})")
+    print(f"下卦: {result['lower_gua']} ({GUA_NAMES[result['lower_gua']]})")
+    print(f"动爻: {result['moving_yao']}爻")
+    print(f"六爻: {result['yao_list']}")
+    print(f"农历: {result['lunar']}")
+    
+    print("\n" + "=" * 60)
     print("标的物起卦测试")
     print("=" * 60)
     
