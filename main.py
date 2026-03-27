@@ -35,6 +35,11 @@ from shi_ying import (
     get_yao_name,
 )
 
+from di_zhi import (
+    get_six_yao_di_zhi,
+    format_di_zhi_simple,
+)
+
 
 def print_menu():
     """打印菜单"""
@@ -90,6 +95,12 @@ def biao_di_wu_menu():
             shi_ying = get_shi_ying(gua_name)
             print(f"世爻: {get_yao_name(shi_ying['shi'])}（第{shi_ying['shi']}爻）")
             print(f"应爻: {get_yao_name(shi_ying['ying'])}（第{shi_ying['ying']}爻）")
+            
+            # 显示地支信息
+            upper_gua = gua['ben_gua']['upper_gua']
+            lower_gua = gua['ben_gua']['lower_gua']
+            di_zhi_result = get_six_yao_di_zhi(upper_gua, lower_gua)
+            print(format_di_zhi_simple(di_zhi_result))
         
         print("=" * 50)
         
@@ -210,6 +221,12 @@ def display_coin_result(result):
         shi_ying = get_shi_ying(gua_name)
         print(f"世爻: {get_yao_name(shi_ying['shi'])}（第{shi_ying['shi']}爻）")
         print(f"应爻: {get_yao_name(shi_ying['ying'])}（第{shi_ying['ying']}爻）")
+        
+        # 显示地支信息
+        upper_gua = gua['ben_gua']['upper_gua']
+        lower_gua = gua['ben_gua']['lower_gua']
+        di_zhi_result = get_six_yao_di_zhi(upper_gua, lower_gua)
+        print(format_di_zhi_simple(di_zhi_result))
     
     print("=" * 50)
 
@@ -273,6 +290,12 @@ def number_menu():
             shi_ying = get_shi_ying(gua_name)
             print(f"世爻: {get_yao_name(shi_ying['shi'])}（第{shi_ying['shi']}爻）")
             print(f"应爻: {get_yao_name(shi_ying['ying'])}（第{shi_ying['ying']}爻）")
+            
+            # 显示地支信息
+            upper_gua = gua['ben_gua']['upper_gua']
+            lower_gua = gua['ben_gua']['lower_gua']
+            di_zhi_result = get_six_yao_di_zhi(upper_gua, lower_gua)
+            print(format_di_zhi_simple(di_zhi_result))
         
         print("=" * 50)
         
