@@ -3,14 +3,15 @@
 六爻起卦系统 - 交互式主程序
 三种起卦方式：
 1. 标的物起卦（笔画+日时）
-2. 随机起卦
+2. 硬币起卦
 3. 数字起卦（上下卦分开输入）
 """
 
 import sys
 from divination import (
     biao_di_wu_divination,
-    random_divination,
+    coin_divination,
+    auto_coin_divination,
     number_divination_v2,
     GUA_NAMES
 )
@@ -22,7 +23,7 @@ def print_menu():
     print("       六爻起卦系统")
     print("=" * 50)
     print("1. 标的物起卦（笔画+日时）")
-    print("2. 随机起卦")
+    print("2. 硬币起卦")
     print("3. 数字起卦（上下卦分开输入）")
     print("0. 退出")
     print("=" * 50)
@@ -58,39 +59,104 @@ def biao_di_wu_menu():
         print(f"起卦出错: {e}")
 
 
-def random_menu():
-    """随机起卦菜单"""
-    print("\n--- 随机起卦 ---")
-    print("正在生成随机六爻...")
+def coin_menu():
+    """硬币起卦菜单"""
+    print("\n--- 硬币起卦 ---")
+    print("1. 系统自动抛硬币")
+    print("2. 手动输入硬币结果")
+    
+    choice = input("请选择 (1-2): ").strip()
+    
+    if choice == "1":
+        auto_coin_menu()
+    elif choice == "2":
+        manual_coin_menu()
+    else:
+        print("无效选择！")
+
+
+def auto_coin_menu():
+    """系统自动抛硬币"""
+    print("\n系统正在自动抛硬币...")
     
     try:
-        result = random_divination()
-        
-        print("\n" + "=" * 50)
-        print("起卦结果")
-        print("=" * 50)
-        print(f"六爻: {result['yao_list']}")
-        print(f"动爻: 第{result['moving_yao']}爻")
-        
-        # 显示六爻详情
-        print("\n六爻详情（从初爻到上爻）：")
-        yao_names = ["初爻", "二爻", "三爻", "四爻", "五爻", "上爻"]
-        for i, yao in enumerate(result['yao_list']):
-            if yao == 0:
-                desc = "少阴（阴爻，静）"
-            elif yao == 1:
-                desc = "少阳（阳爻，静）"
-            elif yao == 2:
-                desc = "老阴（阴爻，动→变阳）"
-            else:
-                desc = "老阳（阳爻，动→变阴）"
-            marker = " ←动爻" if i + 1 == result['moving_yao'] else ""
-            print(f"  {yao_names[i]}: {yao} = {desc}{marker}")
-        
-        print("=" * 50)
+        result = auto_coin_divination()
+        display_coin_result(result)
         
     except Exception as e:
         print(f"起卦出错: {e}")
+
+
+def manual_coin_menu():
+    """手动输入硬币结果"""
+    print("\n--- 手动输入硬币结果 ---")
+    print("请输入6次抛硬币结果，每次3枚硬币")
+    print("输入格式：3个数字，1=正面，0=反面，用空格分隔")
+    print("例如：1 1 0 表示两个正面一个反面")
+    print()
+    
+    coin_results_list = []
+    
+    for i in range(6):
+        while True:
+            try:
+                input_str = input(f"第{i+1}次抛硬币结果: ").strip()
+                parts = input_str.split()
+                
+                if len(parts) != 3:
+                    print("错误：请输入3个数字！")
+                    continue
+                
+                coin_results = []
+                valid = True
+                for p in parts:
+                    if p == '1':
+                        coin_results.append(True)  # 正面
+                    elif p == '0':
+                        coin_results.append(False)  # 反面
+                    else:
+                        print("错误：只能输入0或1！")
+                        valid = False
+                        break
+                
+                if valid:
+                    coin_results_list.append(coin_results)
+                    break
+                    
+            except Exception as e:
+                print(f"输入错误: {e}")
+    
+    try:
+        result = coin_divination(coin_results_list)
+        display_coin_result(result)
+        
+    except Exception as e:
+        print(f"起卦出错: {e}")
+
+
+def display_coin_result(result):
+    """显示硬币起卦结果"""
+    print("\n" + "=" * 50)
+    print("起卦结果")
+    print("=" * 50)
+    
+    # 显示每次抛硬币的详情
+    print("\n硬币详情：")
+    for detail in result['coin_details']:
+        coin_str = " ".join(["正" if c else "反" for c in detail['coin_results']])
+        moving_marker = " ←动爻" if detail['is_moving'] else ""
+        print(f"  {detail['yao_name']}: {coin_str} ({detail['heads_count']}正{detail['tails_count']}反) -> {detail['yao_desc']}{moving_marker}")
+    
+    # 显示六爻列表
+    print(f"\n六爻: {result['yao_list']}")
+    
+    # 显示动爻
+    if result['moving_yao_list']:
+        print(f"动爻: 第{', '.join(map(str, result['moving_yao_list']))}爻")
+    else:
+        print("动爻: 无")
+    
+    print("=" * 50)
 
 
 def number_menu():
@@ -153,7 +219,7 @@ def main():
         if choice == "1":
             biao_di_wu_menu()
         elif choice == "2":
-            random_menu()
+            coin_menu()
         elif choice == "3":
             number_menu()
         elif choice == "0":
