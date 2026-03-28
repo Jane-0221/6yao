@@ -1,4 +1,15 @@
 # 六爻起卦系统依赖包
+#
+# 安装命令: pip install -r requirements.txt
+#
+# 依赖说明:
+# - LunarCalendar: 农历日期计算，用于时间起卦
+# - unihan-etl: Unicode 汉字数据库，用于计算繁体字笔画
+# - opencc-python-reimplemented: 简繁转换，用于将简体字转为繁体计算笔画
+
 LunarCalendar>=0.0.9
 unihan-etl>=0.41.0
 opencc-python-reimplemented>=0.1.7
+
+# 可选: 如果下载速度慢，可以使用国内镜像源
+# pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple

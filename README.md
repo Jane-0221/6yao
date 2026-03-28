@@ -7,25 +7,60 @@
 - **标的物起卦**：根据输入的标的物名称（如股票、婚姻、事业等），结合笔画数和当前时间起卦
 - **硬币起卦**：模拟传统铜钱起卦，支持系统自动抛硬币和手动输入硬币结果两种方式
 - **数字起卦**：输入两个数字分别作为上下卦进行起卦
+- **六神排盘**：根据日天干自动排六神
+- **世应定位**：自动计算世爻和应爻位置
+- **地支配置**：根据卦象自动配置六爻地支
+- **六亲配置**：根据卦宫自动配置六亲
 
 ## 环境要求
 
 - Python 3.8 或更高版本
+- 支持系统：Windows / macOS / Linux
 
 ## 快速开始
 
-### Windows 用户
+### Windows 用户（推荐）
 
 双击运行 `setup.bat` 即可自动配置环境并安装依赖。
+
+脚本会：
+1. 检查 Python 版本（需要 >= 3.8）
+2. 询问是否创建虚拟环境（推荐）
+3. 自动安装所有依赖
+4. 初始化汉字笔画数据
+5. 验证安装是否成功
 
 ### 手动安装
 
 ```bash
-# 安装依赖
+# 1. 创建虚拟环境（可选但推荐）
+python -m venv venv
+
+# 2. 激活虚拟环境
+# Windows:
+venv\Scripts\activate.bat
+# macOS/Linux:
+source venv/bin/activate
+
+# 3. 安装依赖
 pip install -r requirements.txt
 
-# 运行程序
+# 4. 运行程序
 python main.py
+```
+
+### 国内用户加速
+
+如果下载依赖速度较慢，可以使用国内镜像源：
+
+```bash
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+或配置永久使用：
+
+```bash
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ## 项目结构

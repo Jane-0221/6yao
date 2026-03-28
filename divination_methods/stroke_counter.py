@@ -5,6 +5,7 @@
 """
 
 import csv
+import platform
 from pathlib import Path
 from unihan_etl.core import Packager, Options, download, load_data, expand_delimiters
 from unihan_etl.constants import UNIHAN_MANIFEST
@@ -14,8 +15,18 @@ _stroke_cache = None
 _simplified_to_traditional = None
 _traditional_to_simplified = None
 
-# 默认工作目录
-WORK_DIR = Path.home() / 'AppData' / 'Local' / 'Tony Narlock' / 'unihan_etl' / 'Cache' / 'downloads'
+# 默认工作目录（跨平台支持）
+def _get_work_dir():
+    """获取 Unihan 数据缓存目录（跨平台）"""
+    system = platform.system()
+    if system == 'Windows':
+        return Path.home() / 'AppData' / 'Local' / 'Tony Narlock' / 'unihan_etl' / 'Cache' / 'downloads'
+    elif system == 'Darwin':  # macOS
+        return Path.home() / 'Library' / 'Caches' / 'unihan_etl' / 'downloads'
+    else:  # Linux 和其他系统
+        return Path.home() / '.cache' / 'unihan_etl' / 'downloads'
+
+WORK_DIR = _get_work_dir()
 
 
 def _parse_unicode_ref(ref: str) -> str:
