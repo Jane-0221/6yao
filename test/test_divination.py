@@ -3,14 +3,11 @@
 测试起卦功能
 """
 
-from divination import (
+from divination_methods import (
     time_divination,
-    number_divination,
-    manual_divination,
-    save_result,
-    get_yao_description,
     get_lunar_datetime,
-    get_shi_ke
+    get_shi_ke,
+    get_yao_description
 )
 from test import liu_yao_zhuang_gua, print_zhuang_gua_result
 import datetime

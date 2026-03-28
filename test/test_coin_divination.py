@@ -14,7 +14,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='repla
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from divination import coin_toss_to_yao, coin_divination, auto_coin_divination
+from divination_methods import coin_toss_to_yao, coin_divination, auto_coin_divination
 
 
 def test_coin_toss_to_yao():

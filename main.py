@@ -15,7 +15,7 @@ import datetime
 # 设置标准输出编码为UTF-8，解决Windows控制台编码问题
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-from divination import (
+from divination_methods import (
     biao_di_wu_divination,
     coin_divination,
     auto_coin_divination,
