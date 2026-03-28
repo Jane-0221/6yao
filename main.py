@@ -111,7 +111,16 @@ def biao_di_wu_menu():
             # 显示六亲信息
             gong = get_gong_name(gua_name)
             liu_qin_result = get_six_yao_liu_qin(gong, di_zhi_result["di_zhi"])
-            print(format_liu_qin_simple(liu_qin_result))
+            print(f"正卦六亲: {' '.join(liu_qin_result['liu_qin'])}")
+            
+            # 显示变卦六亲信息（如果有变卦）
+            if gua['bian_gua']:
+                bian_upper_gua = gua['bian_gua']['upper_gua']
+                bian_lower_gua = gua['bian_gua']['lower_gua']
+                bian_di_zhi_result = get_six_yao_di_zhi(bian_upper_gua, bian_lower_gua)
+                bian_gong = get_gong_name(gua['bian_gua']['gua64_name'])
+                bian_liu_qin_result = get_six_yao_liu_qin(bian_gong, bian_di_zhi_result["di_zhi"])
+                print(f"变卦六亲: {' '.join(bian_liu_qin_result['liu_qin'])}")
             
             # 显示六神信息
             day_tiangan = get_day_tiangan()
@@ -247,7 +256,16 @@ def display_coin_result(result):
         # 显示六亲信息
         gong = get_gong_name(gua_name)
         liu_qin_result = get_six_yao_liu_qin(gong, di_zhi_result["di_zhi"])
-        print(format_liu_qin_simple(liu_qin_result))
+        print(f"正卦六亲: {' '.join(liu_qin_result['liu_qin'])}")
+        
+        # 显示变卦六亲信息（如果有变卦）
+        if gua['bian_gua']:
+            bian_upper_gua = gua['bian_gua']['upper_gua']
+            bian_lower_gua = gua['bian_gua']['lower_gua']
+            bian_di_zhi_result = get_six_yao_di_zhi(bian_upper_gua, bian_lower_gua)
+            bian_gong = get_gong_name(gua['bian_gua']['gua64_name'])
+            bian_liu_qin_result = get_six_yao_liu_qin(bian_gong, bian_di_zhi_result["di_zhi"])
+            print(f"变卦六亲: {' '.join(bian_liu_qin_result['liu_qin'])}")
         
         # 显示六神信息 - 需要使用从初爻到上爻的顺序
         day_tiangan = get_day_tiangan()
@@ -327,7 +345,16 @@ def number_menu():
             # 显示六亲信息
             gong = get_gong_name(gua_name)
             liu_qin_result = get_six_yao_liu_qin(gong, di_zhi_result["di_zhi"])
-            print(format_liu_qin_simple(liu_qin_result))
+            print(f"正卦六亲: {' '.join(liu_qin_result['liu_qin'])}")
+            
+            # 显示变卦六亲信息（如果有变卦）
+            if gua['bian_gua']:
+                bian_upper_gua = gua['bian_gua']['upper_gua']
+                bian_lower_gua = gua['bian_gua']['lower_gua']
+                bian_di_zhi_result = get_six_yao_di_zhi(bian_upper_gua, bian_lower_gua)
+                bian_gong = get_gong_name(gua['bian_gua']['gua64_name'])
+                bian_liu_qin_result = get_six_yao_liu_qin(bian_gong, bian_di_zhi_result["di_zhi"])
+                print(f"变卦六亲: {' '.join(bian_liu_qin_result['liu_qin'])}")
             
             # 显示六神信息
             day_tiangan = get_day_tiangan()

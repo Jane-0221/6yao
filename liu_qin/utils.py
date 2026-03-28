@@ -55,6 +55,8 @@ def format_liu_qin_simple(result: Dict) -> str:
     """
     简洁格式输出六亲（与世应、地支显示风格一致）
     
+    输出顺序：从初爻到上爻（原始顺序）
+    
     Args:
         result: get_six_yao_liu_qin() 返回的结果字典
     
@@ -64,7 +66,7 @@ def format_liu_qin_simple(result: Dict) -> str:
     Examples:
         >>> result = get_six_yao_liu_qin("乾宫", ["子", "寅", "辰", "午", "申", "戌"])
         >>> print(format_liu_qin_simple(result))
-        六亲: 子孙 妻财 兄弟 官鬼 父母 兄弟
+        六亲: 子孙 妻财 父母 官鬼 兄弟 父母
     """
     return f"六亲: {' '.join(result['liu_qin'])}"
 
